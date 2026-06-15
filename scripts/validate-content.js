@@ -215,6 +215,7 @@ const ALLOWED_LATIN = new Set([
 ]);
 
 const STYLE_CHECK_PATH = /\.(title|summary|statement|perspective|aiNotes)$|\.review\.\d+$|\.progress\.\d+\.note$|\.comments\.\d+\.text$/;
+const TEX_COMMAND_WORDS = /\b(?:le|ge|neq|to|infty|bmod|pmod|sqrt|log|liminf|limsup|lfloor|rfloor|lceil|rceil)\b/g;
 
 function fakeElement() {
   return {
@@ -299,6 +300,16 @@ function validateText(text, label) {
   const closes = (text.match(/\\\)/g) || []).length;
   if (opens !== closes) {
     errors.push(`${label}: несбалансированные TeX-разделители \\( и \\)`);
+  }
+
+  const texSegments = text.match(/\\\((?:.|\n)*?\\\)/g) || [];
+  for (const segment of texSegments) {
+    const brokenCommands = [...segment.matchAll(TEX_COMMAND_WORDS)]
+      .filter((match) => segment[match.index - 1] !== "\\")
+      .map((match) => match[0]);
+    if (brokenCommands.length) {
+      errors.push(`${label}: внутри TeX похожая на команду строка без обратного слэша (${[...new Set(brokenCommands)].join(", ")})`);
+    }
   }
 
   if (!STYLE_CHECK_PATH.test(label)) return;
