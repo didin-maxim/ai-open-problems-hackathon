@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ИИ-хакатон открытых задач</title>
+    <meta
+      name="description"
+      content="База исследовательских задач для летнего хакатона: статусы, источники, обзоры, прогресс и обратная связь."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#/">
+        <span class="brand-mark" aria-hidden="true">ИИ</span>
+        <span>
+          <strong>ИИ-хакатон открытых задач</strong>
+          <small>летняя база задач</small>
+        </span>
+      </a>
+      <nav class="topnav" aria-label="Главная навигация">
+        <a href="#/">Задачи</a>
+        <a href="#/suggest">Предложить</a>
+        <a href="#/about">Правила</a>
+      </nav>
+    </header>
+
+    <main id="app" tabindex="-1"></main>
+
+    <template id="task-card-template">
+      <article class="task-card">
+        <div class="card-head">
+          <span class="status-pill"></span>
+          <span class="area-tag"></span>
+        </div>
+        <h2></h2>
+        <p class="task-summary"></p>
+        <dl class="task-meta"></dl>
+        <div class="card-actions">
+          <a class="button primary details-link" href="#">Открыть</a>
+          <a class="button ghost feedback-link" href="#">Откликнуться</a>
+        </div>
+      </article>
+    </template>
+
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["\\(", "\\)"]],
+          displayMath: [["\\[", "\\]"]],
+        },
+        options: {
+          skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+        },
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
